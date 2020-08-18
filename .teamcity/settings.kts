@@ -36,19 +36,20 @@ object FlakyTests : BuildType({
 
     params {
         param("shouldFail", "false")
+        param("duration", "300")
     }
 
     steps {
         script {
             scriptContent = """
                 echo "##teamcity[testStarted name='myTest1' captureStandardOutput='true']"
-                echo "##teamcity[testFinished name='myTest1' duration='500']"
+                echo "##teamcity[testFinished name='myTest1' duration='%duration%']"
                 echo "##teamcity[testStarted name='myTest2' captureStandardOutput='true']"
                 if [ %shouldFail% = true ]
                 then
                 echo "##teamcity[testFailed name='myTest2']"
                 fi
-                echo "##teamcity[testFinished name='myTest2' duration='500']"
+                echo "##teamcity[testFinished name='myTest2' duration='%duration%']"
             """.trimIndent()
         }
     }
