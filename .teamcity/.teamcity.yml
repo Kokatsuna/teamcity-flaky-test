@@ -1,0 +1,44 @@
+jobs:
+  Job1:
+    name: J
+    steps:
+      - type: script
+        script-content: echo "test" >> test-a.txt
+    files-publication:
+      - '*'
+  Job2:
+    name: Job B
+    steps:
+      - type: script
+        script-content: echo "test" >> test-b.txt
+    files-publication:
+      - '*'
+    allow-reuse: false
+  JobC:
+    name: Job C
+    steps:
+      - type: script
+        script-content: ls
+    dependencies:
+      - Job2:
+          files:
+            - '*'
+      - JobB2:
+          files:
+            - '*'
+    allow-reuse: false
+  JobB2:
+    name: Job B.2
+    steps:
+      - type: script
+        script-content: echo "test" >> test-b-2.txt
+    files-publication:
+      - '*'
+    allow-reuse: false
+  Job1_2:
+    name: Job
+    steps:
+      - type: script
+        script-content: echo "test" >> test-no-name.txt
+    files-publication:
+      - '*'
